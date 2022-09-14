@@ -1,0 +1,6 @@
+﻿  Source.cpp
+C:\Users\roman\source\repos\DllVector\DllVector\Vector.h(29,10): warning C4251: vector::Vector::x_: class "Number::Number" должен иметь dll-интерфейс для использования клиентами class "vector::Vector"
+C:\Users\roman\source\repos\Number\Number\Number.h(9): message : см. объявление "Number::Number"
+C:\Users\roman\source\repos\DllVector\DllVector\Vector.h(30,10): warning C4251: vector::Vector::y_: class "Number::Number" должен иметь dll-интерфейс для использования клиентами class "vector::Vector"
+C:\Users\roman\source\repos\Number\Number\Number.h(9): message : см. объявление "Number::Number"
+  Testing.vcxproj -> C:\Users\roman\source\repos\Testing\x64\Debug\Testing.exe
