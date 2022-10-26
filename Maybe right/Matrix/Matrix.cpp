@@ -22,7 +22,7 @@ Matrix Matrix::matrixBlockMultiply(Matrix m1, Matrix m2, int number, int numOfTh
     BufferedChannel<std::pair<int, int>> channel(pow(m2.getSize()/number + 1,2));
     int count = 0;
     Matrix result = Matrix(res);
-    std::vector<std::thread> threads;
+    std::list<std::thread> threads;
     int size = m1.getSize();
     for (int i = 0; i < size; i += number) {
         for (int j = 0; j < size; j += number){
@@ -31,10 +31,11 @@ Matrix Matrix::matrixBlockMultiply(Matrix m1, Matrix m2, int number, int numOfTh
                 threads.emplace_back(blockMultiply, std::ref(m1), std::ref(m2), std::ref(result), std::ref(channel), number);
                 count++;
             } else{
-                threads[0].join();
-                threads[0] = std::thread(blockMultiply, std::ref(m1), std::ref(m2), std::ref(result), std::ref(channel), number);
+                threads.front().join();
+                threads.pop_front();
+                threads.emplace_back(blockMultiply, std::ref(m1), std::ref(m2), std::ref(result), std::ref(channel), number);
             }
-        }
+      }
     }
 
     for (auto& t: threads) {
