@@ -9,7 +9,7 @@ void syncTests(Matrix& a, Matrix& b){
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
     for (int i = 1; i <= a.getMatrix().size(); ++i) {
         start = std::chrono::high_resolution_clock::now();
-        Matrix result = Matrix::matrixBlockMultiply(a, b, i, 1);
+        Matrix result = Matrix::matrixBlockMultiply(a, b, i, 75);
         end = std::chrono::high_resolution_clock::now();
         elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
         std::cout << "For block size " << i << ":" <<  elapsed.count() << std::endl;
@@ -34,5 +34,6 @@ int main() {
 
     Matrix mx1 = Matrix(matrix1);
     Matrix mx2 = Matrix(matrix2);
+
     syncTests(mx1, mx2);
 }
