@@ -16,17 +16,21 @@ void Matrix::blockMultiply(const Matrix& m1, const Matrix& m2, Matrix& resultBlo
     }
 }
 
-Matrix Matrix::matrixBlockMultiply(Matrix m1, Matrix m2, int number, int numOfThreads){
-    std::vector<std::vector<double>> res(5, std::vector<double>(5,0));
 
-    BufferedChannel<std::pair<int, int>> channel(pow(m2.getSize()/number + 1,2));
-    int count = 0;
-    Matrix result = Matrix(res);
-    std::list<std::thread> threads;
+Matrix Matrix::matrixBlockMultiply(Matrix m1, Matrix m2, int number, int numOfThreads){
     int size = m1.getSize();
+    std::vector<std::vector<double>> res(size, std::vector<double>(size,0));
+    Matrix result = Matrix(res);
+    int count = 0;
+    std::list<std::thread> threads;
+    BufferedChannel<std::pair<int, int>> channel(pow(size/number + 1,2));
     for (int i = 0; i < size; i += number) {
         for (int j = 0; j < size; j += number){
             channel.Send(std::pair(i, j));
+        }
+    }
+    for (int i = 0; i < size; i += number) {
+        for (int j = 0; j < size; j += number){
             if (count < numOfThreads){
                 threads.emplace_back(blockMultiply, std::ref(m1), std::ref(m2), std::ref(result), std::ref(channel), number);
                 count++;
