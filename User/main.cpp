@@ -18,5 +18,6 @@ int main(int argc, char* argv[]) {
             system("../Killer");
             _exit(0);
     }
+        unsetenv("PROC_TO_KILL"); 
     return 0;
 }
