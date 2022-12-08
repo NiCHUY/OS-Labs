@@ -1,44 +1,27 @@
+#include <iostream>
 #include <unistd.h>
 
+
+std::string processes[] = {
+        "/home/roman/ProcessM/cmake-build-debug/ProcessM",
+        "/home/roman/ProcessA/cmake-build-debug/ProcessA",
+        "/home/roman/ProcessP/cmake-build-debug/ProcessP"};
+
 int main() {
-    // MAPS
-
-    int from_M_to_A[2];
-    pipe(from_M_to_A);
-
-    int pid = fork();
-
-    if (pid != 0) {
+    int p[3];
+    int pid;
+    std::string line;
+    for (int i = 0; i < 3; i++) {
+        pipe(p);
         pid = fork();
-
-        int from_A_to_P[2];
-        pipe(from_A_to_P);
-
-        if (pid != 0) {
-            pid = fork();
-
-            int from_P_to_S[2];
-            pipe(from_P_to_S);
-
-            if (pid != 0) {
-                dup2(from_P_to_S[0], 0);
-
-                execv("S", reinterpret_cast<char *const *>("aRGV"));
-            } else {
-                dup2(from_A_to_P[0], 0);
-                dup2(from_P_to_S[1], 1);
-
-                execv("P", reinterpret_cast<char *const *>("aRGV"));
-            }
-        } else {
-            dup2(from_M_to_A[0], 0);
-            dup2(from_A_to_P[1], 1);
-
-            execv("A", reinterpret_cast<char *const *>("aRGV"));
+        if (!pid) {
+            dup2(p[1], 1);
+            system(processes[i].c_str());
+            exit(0);
         }
-    } else {
-        dup2(from_M_to_A[1], 1);
-        execv("M", reinterpret_cast<char *const *>("aRGV"));
+        dup2(p[0],0);
+        close(p[1]);
     }
+    system("/home/roman/ProcessS/cmake-build-debug/ProcessS";
     return 0;
 }
