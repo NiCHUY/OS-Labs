@@ -3,9 +3,9 @@
 
 
 std::string processes[] = {
-        "/home/roman/ProcessM/cmake-build-debug/ProcessM",
-        "/home/roman/ProcessA/cmake-build-debug/ProcessA",
-        "/home/roman/ProcessP/cmake-build-debug/ProcessP"};
+        "/home/roman/CLionProjects/ProcessM/cmake-build-debug/ProcessM",
+        "/home/roman/CLionProjects/ProcessA/cmake-build-debug/ProcessA",
+        "/home/roman/CLionProjects/ProcessP/cmake-build-debug/ProcessP"};
 
 int main() {
     int p[3];
@@ -22,6 +22,6 @@ int main() {
         dup2(p[0],0);
         close(p[1]);
     }
-    system("/home/roman/ProcessS/cmake-build-debug/ProcessS";
+    system("/home/roman/CLionProjects/ProcessS/cmake-build-debug/ProcessS";
     return 0;
 }
